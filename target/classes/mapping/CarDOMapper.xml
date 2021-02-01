@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.intelligenceparking.dao.CarDOMapper">
+  <resultMap id="BaseResultMap" type="com.intelligenceparking.dataobject.CarDO">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="license" jdbcType="CHAR" property="license" />
+    <result column="type" jdbcType="CHAR" property="type" />
+    <result column="length" jdbcType="REAL" property="length" />
+    <result column="width" jdbcType="REAL" property="width" />
+    <result column="height" jdbcType="REAL" property="height" />
+    <result column="color" jdbcType="CHAR" property="color" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="verification" jdbcType="TINYINT" property="verification" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, license, type, length, width, height, color, user_id, verification
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from car
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from car
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.intelligenceparking.dataobject.CarDO">
+    insert into car (id, license, type, 
+      length, width, height, color, 
+      user_id, verification)
+    values (#{id,jdbcType=INTEGER}, #{license,jdbcType=CHAR}, #{type,jdbcType=CHAR}, 
+      #{length,jdbcType=REAL}, #{width,jdbcType=REAL}, #{height,jdbcType=REAL}, #{color,jdbcType=CHAR}, 
+      #{userId,jdbcType=INTEGER}, #{verification,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.intelligenceparking.dataobject.CarDO">
+    insert into car
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="license != null">
+        license,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="length != null">
+        length,
+      </if>
+      <if test="width != null">
+        width,
+      </if>
+      <if test="height != null">
+        height,
+      </if>
+      <if test="color != null">
+        color,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="verification != null">
+        verification,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="license != null">
+        #{license,jdbcType=CHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=CHAR},
+      </if>
+      <if test="length != null">
+        #{length,jdbcType=REAL},
+      </if>
+      <if test="width != null">
+        #{width,jdbcType=REAL},
+      </if>
+      <if test="height != null">
+        #{height,jdbcType=REAL},
+      </if>
+      <if test="color != null">
+        #{color,jdbcType=CHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="verification != null">
+        #{verification,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.intelligenceparking.dataobject.CarDO">
+    update car
+    <set>
+      <if test="license != null">
+        license = #{license,jdbcType=CHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=CHAR},
+      </if>
+      <if test="length != null">
+        length = #{length,jdbcType=REAL},
+      </if>
+      <if test="width != null">
+        width = #{width,jdbcType=REAL},
+      </if>
+      <if test="height != null">
+        height = #{height,jdbcType=REAL},
+      </if>
+      <if test="color != null">
+        color = #{color,jdbcType=CHAR},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="verification != null">
+        verification = #{verification,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.intelligenceparking.dataobject.CarDO">
+    update car
+    set license = #{license,jdbcType=CHAR},
+      type = #{type,jdbcType=CHAR},
+      length = #{length,jdbcType=REAL},
+      width = #{width,jdbcType=REAL},
+      height = #{height,jdbcType=REAL},
+      color = #{color,jdbcType=CHAR},
+      user_id = #{userId,jdbcType=INTEGER},
+      verification = #{verification,jdbcType=TINYINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectCarByOwnerId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    SELECT * FROM car WHERE user_id = #{userId}
+  </select>
+
+  <update id="updateCarMsg" parameterType="com.intelligenceparking.dataobject.CarDO">
+
+  </update>
+
+</mapper>

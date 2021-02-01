@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.intelligenceparking.dao.ParkingFieldDOMapper">
+  <resultMap id="BaseResultMap" type="com.intelligenceparking.dataobject.ParkingFieldDO">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="is_banned" jdbcType="TINYINT" property="isBanned" />
+    <result column="name" jdbcType="CHAR" property="name" />
+    <result column="longitude" jdbcType="REAL" property="longitude" />
+    <result column="latitude" jdbcType="REAL" property="latitude" />
+    <result column="description" jdbcType="CHAR" property="description" />
+    <result column="picture_url" jdbcType="CHAR" property="pictureUrl" />
+    <result column="coordinate_url" jdbcType="CHAR" property="coordinateUrl" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, is_banned, name, longitude, latitude, description, picture_url, coordinate_url
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from parking_field
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from parking_field
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.intelligenceparking.dataobject.ParkingFieldDO">
+    insert into parking_field (id, is_banned, name, 
+      longitude, latitude, description, 
+      picture_url, coordinate_url)
+    values (#{id,jdbcType=INTEGER}, #{isBanned,jdbcType=TINYINT}, #{name,jdbcType=CHAR}, 
+      #{longitude,jdbcType=REAL}, #{latitude,jdbcType=REAL}, #{description,jdbcType=CHAR}, 
+      #{pictureUrl,jdbcType=CHAR}, #{coordinateUrl,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.intelligenceparking.dataobject.ParkingFieldDO">
+    insert into parking_field
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="isBanned != null">
+        is_banned,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="longitude != null">
+        longitude,
+      </if>
+      <if test="latitude != null">
+        latitude,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="pictureUrl != null">
+        picture_url,
+      </if>
+      <if test="coordinateUrl != null">
+        coordinate_url,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="isBanned != null">
+        #{isBanned,jdbcType=TINYINT},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=CHAR},
+      </if>
+      <if test="longitude != null">
+        #{longitude,jdbcType=REAL},
+      </if>
+      <if test="latitude != null">
+        #{latitude,jdbcType=REAL},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=CHAR},
+      </if>
+      <if test="pictureUrl != null">
+        #{pictureUrl,jdbcType=CHAR},
+      </if>
+      <if test="coordinateUrl != null">
+        #{coordinateUrl,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.intelligenceparking.dataobject.ParkingFieldDO">
+    update parking_field
+    <set>
+      <if test="isBanned != null">
+        is_banned = #{isBanned,jdbcType=TINYINT},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=CHAR},
+      </if>
+      <if test="longitude != null">
+        longitude = #{longitude,jdbcType=REAL},
+      </if>
+      <if test="latitude != null">
+        latitude = #{latitude,jdbcType=REAL},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=CHAR},
+      </if>
+      <if test="pictureUrl != null">
+        picture_url = #{pictureUrl,jdbcType=CHAR},
+      </if>
+      <if test="coordinateUrl != null">
+        coordinate_url = #{coordinateUrl,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.intelligenceparking.dataobject.ParkingFieldDO">
+    update parking_field
+    set is_banned = #{isBanned,jdbcType=TINYINT},
+      name = #{name,jdbcType=CHAR},
+      longitude = #{longitude,jdbcType=REAL},
+      latitude = #{latitude,jdbcType=REAL},
+      description = #{description,jdbcType=CHAR},
+      picture_url = #{pictureUrl,jdbcType=CHAR},
+      coordinate_url = #{coordinateUrl,jdbcType=CHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="findAllFields"  resultMap="BaseResultMap">
+    SELECT * FROM parking_field
+  </select>
+
+  <select id="fieldNearBy"  parameterType="com.intelligenceparking.tool.requests.ParkingNearBy" resultMap="BaseResultMap">
+    SELECT * FROM parking_field where ((longitude-#{userLongitude})*(longitude-#{userLongitude})+(latitude-#{userLatitude})*(latitude-#{userLatitude})) &lt; #{distance}
+  </select>
+
+</mapper>

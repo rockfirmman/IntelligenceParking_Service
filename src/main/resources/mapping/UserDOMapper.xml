@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.intelligenceparking.dao.UserDOMapper">
+  <resultMap id="BaseResultMap" type="com.intelligenceparking.dataobject.UserDO">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="username" jdbcType="CHAR" property="username" />
+    <result column="is_frozed" jdbcType="TINYINT" property="isFrozed" />
+    <result column="password" jdbcType="CHAR" property="password" />
+    <result column="is_login" jdbcType="TINYINT" property="isLogin" />
+    <result column="phone" jdbcType="CHAR" property="phone" />
+    <result column="email" jdbcType="CHAR" property="email" />
+    <result column="is_administrator" jdbcType="TINYINT" property="isAdministrator" />
+    <result column="avatar" jdbcType="CHAR" property="avatar" />
+    <result column="account" jdbcType="CHAR" property="account" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, username, is_frozed, password, is_login, phone, email, is_administrator, avatar, 
+    account
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from user
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.intelligenceparking.dataobject.UserDO">
+    insert into user (id, username, is_frozed, 
+      password, is_login, phone, 
+      email, is_administrator, avatar, 
+      account)
+    values (#{id,jdbcType=INTEGER}, #{username,jdbcType=CHAR}, #{isFrozed,jdbcType=TINYINT}, 
+      #{password,jdbcType=CHAR}, #{isLogin,jdbcType=TINYINT}, #{phone,jdbcType=CHAR}, 
+      #{email,jdbcType=CHAR}, #{isAdministrator,jdbcType=TINYINT}, #{avatar,jdbcType=CHAR}, 
+      #{account,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.intelligenceparking.dataobject.UserDO">
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="username != null">
+        username,
+      </if>
+      <if test="isFrozed != null">
+        is_frozed,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+      <if test="isLogin != null">
+        is_login,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="isAdministrator != null">
+        is_administrator,
+      </if>
+      <if test="avatar != null">
+        avatar,
+      </if>
+      <if test="account != null">
+        account,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="username != null">
+        #{username,jdbcType=CHAR},
+      </if>
+      <if test="isFrozed != null">
+        #{isFrozed,jdbcType=TINYINT},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=CHAR},
+      </if>
+      <if test="isLogin != null">
+        #{isLogin,jdbcType=TINYINT},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=CHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=CHAR},
+      </if>
+      <if test="isAdministrator != null">
+        #{isAdministrator,jdbcType=TINYINT},
+      </if>
+      <if test="avatar != null">
+        #{avatar,jdbcType=CHAR},
+      </if>
+      <if test="account != null">
+        #{account,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.intelligenceparking.dataobject.UserDO">
+    update user
+    <set>
+      <if test="username != null">
+        username = #{username,jdbcType=CHAR},
+      </if>
+      <if test="isFrozed != null">
+        is_frozed = #{isFrozed,jdbcType=TINYINT},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=CHAR},
+      </if>
+      <if test="isLogin != null">
+        is_login = #{isLogin,jdbcType=TINYINT},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=CHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=CHAR},
+      </if>
+      <if test="isAdministrator != null">
+        is_administrator = #{isAdministrator,jdbcType=TINYINT},
+      </if>
+      <if test="avatar != null">
+        avatar = #{avatar,jdbcType=CHAR},
+      </if>
+      <if test="account != null">
+        account = #{account,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.intelligenceparking.dataobject.UserDO">
+    update user
+    set username = #{username,jdbcType=CHAR},
+      is_frozed = #{isFrozed,jdbcType=TINYINT},
+      password = #{password,jdbcType=CHAR},
+      is_login = #{isLogin,jdbcType=TINYINT},
+      phone = #{phone,jdbcType=CHAR},
+      email = #{email,jdbcType=CHAR},
+      is_administrator = #{isAdministrator,jdbcType=TINYINT},
+      avatar = #{avatar,jdbcType=CHAR},
+      account = #{account,jdbcType=CHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+
+  <insert id="register" parameterType="com.intelligenceparking.dataobject.UserDO">
+        INSERT INTO user(username,password,phone,email,avatar,account) VALUES(#{username}, #{password}, #{phone}, #{email}, #{avatar}, #{account});
+  </insert>
+
+  <select id="login" parameterType="com.intelligenceparking.dataobject.UserDO" resultMap="BaseResultMap">
+    SELECT * FROM user WHERE username = #{username} and password = #{password}
+  </select>
+
+  <update id="updateMsg" parameterType="com.intelligenceparking.dataobject.UserDO">
+    UPDATE  user SET username = #{username},password = #{password},phone= #{phone},email = #{email},avatar = #{avatar},account = #{account} WHERE username = #{username}
+  </update>
+
+  <update id="registerVerify" parameterType="com.intelligenceparking.dataobject.UserDO">
+        UPDATE  user SET is_frozed = 0 WHERE email = #{email}
+  </update>
+
+  <select id="findUserByUsername" parameterType="com.intelligenceparking.dataobject.UserDO" resultMap="BaseResultMap">
+    SELECT * FROM user WHERE username = #{username}
+  </select>
+</mapper>
