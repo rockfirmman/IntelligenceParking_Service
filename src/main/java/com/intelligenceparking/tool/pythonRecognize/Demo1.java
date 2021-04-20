@@ -1,0 +1,30 @@
+package com.intelligenceparking.tool.pythonRecognize;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class Demo1 {
+    public static void main(String[] args) {
+        // TODO Auto-generated method stub
+        String command = "C:\\Users\\rockfirmman\\Desktop\\毕业设计\\IntelligenceParking\\src\\main\\java\\com\\intelligenceparking\\tool\\pythonRecognize\\recognize.py";
+        String picPath = "C:\\Users\\rockfirmman\\Desktop\\test.jfif";
+        try {
+            String[] commands = new String[] { "python", command, picPath};
+            Process proc = Runtime.getRuntime().exec(commands);// 执行py文件
+            BufferedReader in = new BufferedReader(new InputStreamReader(proc.getInputStream(),"gb2312")); //gb2312防止调用乱码
+            String line = null;
+            while ((line = in.readLine()) != null) {
+                System.out.println(line);
+            }
+            in.close();
+            proc.waitFor();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+}

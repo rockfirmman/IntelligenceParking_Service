@@ -1,6 +1,7 @@
 package com.intelligenceparking.controller;
 
 import com.intelligenceparking.response.CommonReturnType;
+import com.intelligenceparking.tool.pythonRecognize.recognize;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -14,7 +15,7 @@ import java.util.Date;
 @RestController
 @RequestMapping("/file")
 public class FileController {
-    private final String filePath = "C:/Users/Admin/Desktop/";
+    private final String filePath = "C:/Users/rockfirmman/Desktop/";
 //    private final String filePath = "/root/static/";
     @PostMapping("/uploadAvatar")
     public Object uploadAvatar(@RequestParam(name = "fileName") MultipartFile fileUpload, @RequestParam(name = "id") int id){
@@ -101,6 +102,31 @@ public class FileController {
             return CommonReturnType.create("下载失败，图片不存在","false");
         return export(file);
     }
+
+    @PostMapping("/uploadLicensePic")
+    public void uploadLicensePic(@RequestParam(name = "fileName") MultipartFile fileUpload, @RequestParam(name = "hardwareId") int hardwareId){
+        //获取文件名
+        String fileName = fileUpload.getOriginalFilename();
+        System.out.println(fileName);
+        //存储图片
+        try {
+            fileUpload.transferTo(new File(filePath + "License/" + fileName));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        //获取车牌号
+        String commandPath = filePath + "recognize.py";
+        String picPath = filePath + "License/" + fileName;
+        String license = recognize.getLicense(commandPath,picPath);
+        System.out.println(hardwareId + ": " + license);
+        //删除图片
+        File deleteFile = new File(filePath + "License/" + fileName);
+        deleteFile.delete();
+        if("null".equals(license)) return;
+        //TODO ,按照hardware id 寻找停车位，
+
+    }
+
 
 
     public ResponseEntity<FileSystemResource> export(File file) {
