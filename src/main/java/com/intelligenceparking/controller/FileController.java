@@ -15,8 +15,8 @@ import java.util.Date;
 @RestController
 @RequestMapping("/file")
 public class FileController {
-    private final String filePath = "C:/Users/rockfirmman/Desktop/";
-//    private final String filePath = "/root/static/";
+//    private final String filePath = "C:/Users/rockfirmman/Desktop/";
+    private final String filePath = "/root/";
     @PostMapping("/uploadAvatar")
     public Object uploadAvatar(@RequestParam(name = "fileName") MultipartFile fileUpload, @RequestParam(name = "id") int id){
         //获取文件名
@@ -104,7 +104,7 @@ public class FileController {
     }
 
     @PostMapping("/uploadLicensePic")
-    public void uploadLicensePic(@RequestParam(name = "fileName") MultipartFile fileUpload, @RequestParam(name = "hardwareId") int hardwareId){
+    public CommonReturnType uploadLicensePic(@RequestParam(name = "fileName") MultipartFile fileUpload, @RequestParam(name = "hardwareId") int hardwareId){
         //获取文件名
         String fileName = fileUpload.getOriginalFilename();
         System.out.println(fileName);
@@ -122,9 +122,9 @@ public class FileController {
         //删除图片
         File deleteFile = new File(filePath + "License/" + fileName);
         deleteFile.delete();
-        if("null".equals(license)) return;
-        //TODO ,按照hardware id 寻找停车位，
-
+        if("null".equals(license)) return CommonReturnType.create("未检测到车辆","false");
+        //TODO ,按照hardware id 寻找停车位，并入业务
+        return CommonReturnType.create(license,"success");
     }
 
 

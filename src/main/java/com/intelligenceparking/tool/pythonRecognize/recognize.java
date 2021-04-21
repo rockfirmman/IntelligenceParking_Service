@@ -10,7 +10,8 @@ public  class recognize {
         try {
             String[] commands = new String[] { "python", commandPath, picPath};
             Process proc = Runtime.getRuntime().exec(commands);// 执行py文件
-            BufferedReader in = new BufferedReader(new InputStreamReader(proc.getInputStream(),"gb2312")); //gb2312防止调用乱码
+//            BufferedReader in = new BufferedReader(new InputStreamReader(proc.getInputStream(),"gb2312")); //gb2312防止调用乱码
+            BufferedReader in = new BufferedReader(new InputStreamReader(proc.getInputStream()));
             String line = null;
             while ((line = in.readLine()) != null) {
                 license = line;
