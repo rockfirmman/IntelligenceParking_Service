@@ -145,4 +145,7 @@
 
   </update>
 
+  <select id="selectCarByLicense" parameterType="java.lang.String" resultMap="BaseResultMap">
+    SELECT * FROM car WHERE license = #{license,jdbcType=VARCHAR}
+  </select>
 </mapper>

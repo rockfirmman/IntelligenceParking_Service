@@ -2,10 +2,12 @@ package com.intelligenceparking.controller;
 
 
 import com.intelligenceparking.bean.BillModel;
+import com.intelligenceparking.bean.CarModel;
 import com.intelligenceparking.controller.viewobject.BillVO;
 import com.intelligenceparking.dataobject.BillDO;
 import com.intelligenceparking.response.CommonReturnType;
 import com.intelligenceparking.service.BillService;
+import com.intelligenceparking.service.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +19,7 @@ import java.util.List;
 public class BillController {
     @Autowired
     private BillService billService;
+    private CarService carService;
 
     @PostMapping(value="/selectBillById")
     public CommonReturnType selectBillById(
@@ -128,4 +131,19 @@ public class BillController {
         List<BillDO> billDOList = billService.selectBillByCarId(carId);
         return CommonReturnType.create(billDOList);
     }
+
+    public void createBillByHardware(
+            @RequestParam(name = "hardwareId") int hardwareId,
+            @RequestParam(name = "license") String license){
+        CarModel carModel = carService.selectCarById(hardwareId);
+        BillDO billDO = new BillDO();
+//        billDO.setCarId(carId);
+//        billDO.setSlotId(slotId);
+//        billDO.setFieldId(fieldId);
+//        billDO.setPayerId(payerId);
+//        billDO.setOwnerId(ownerId);
+//        billDO.setStartTime(startTime);
+//        billService.createBill(billDO);
+    }
+
 }

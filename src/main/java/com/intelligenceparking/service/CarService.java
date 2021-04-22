@@ -31,4 +31,9 @@ public interface CarService {
      * 根据用户id查找车辆
      */
     List<CarModel> selectCarByOwnerId(@Param("userId") int userId);
+
+    /**
+     * 通过牌照查询车辆信息
+     */
+    CarModel selectCarByLicense(@Param("license") String license);
 }

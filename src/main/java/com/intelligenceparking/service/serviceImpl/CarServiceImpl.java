@@ -49,6 +49,12 @@ public class CarServiceImpl implements CarService {
         return  carModelList;
     }
 
+    @Override
+    public CarModel selectCarByLicense(String license) {
+        CarDO carDO = carDOMapper.selectCarByLicense(license);
+        return convertFromDO(carDO);
+    }
+
     private CarDO convertFromModel(CarModel carModel) {
         if (carModel == null) {
             return null;

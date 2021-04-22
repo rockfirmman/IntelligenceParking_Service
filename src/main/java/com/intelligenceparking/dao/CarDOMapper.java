@@ -23,4 +23,9 @@ public interface CarDOMapper {
      * 根据用户id查找车辆
      */
     List<CarDO> selectCarByOwnerId(@Param("userId") int userId);
+
+    /**
+     * 通过牌照查询车辆信息
+     */
+    CarDO selectCarByLicense(@Param("license") String license);
 }

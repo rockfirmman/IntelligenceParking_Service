@@ -82,5 +82,10 @@ public class CarController {
         return null;
     }
 
+    @RequestMapping("/selectCarByLicense")
+    public CommonReturnType selectCarByLicense(@RequestParam(name = "license") String license) {
+        CarModel carModel = carService.selectCarByLicense(license);
+        return CommonReturnType.create(carModel);
+    }
 
 }
