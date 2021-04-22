@@ -108,4 +108,11 @@ public class ParkingSlotController {
         List<ParkingSlotModel> parkingSlotModelList = parkingSlotService.slotNearBy(parkingNearBy);
         return CommonReturnType.create(parkingSlotModelList);
     }
+
+    @PostMapping("/selectParkingSlotByHardwareId")
+    public CommonReturnType selectParkingSlotByHardwareId(@RequestParam(name = "hardwareId") int hardwareId) {
+        ParkingSlotModel parkingSlotModel = parkingSlotService.selectParkingSlotByHardwareId(hardwareId);
+        return CommonReturnType.create(parkingSlotModel);
+    }
+
 }

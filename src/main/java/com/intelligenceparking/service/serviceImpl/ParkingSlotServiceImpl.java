@@ -62,6 +62,13 @@ public class ParkingSlotServiceImpl implements ParkingSlotService {
         return parkingSlotModels;
     }
 
+    @Override
+    public ParkingSlotModel selectParkingSlotByHardwareId(int hardwareId) {
+        ParkingSlotDO parkingSlotDO = parkingSlotDOMapper.selectParkingSlotByHardwareId(hardwareId);
+        ParkingSlotModel parkingSlotModel = convertFromDO(parkingSlotDO);
+        return parkingSlotModel;
+    }
+
     private ParkingSlotDO convertFromModel(ParkingSlotModel parkingSlotModel) {
         if (parkingSlotModel == null) {
             return null;

@@ -209,4 +209,7 @@
     SELECT * FROM parking_slot where ((longitude-#{userLongitude})*(longitude-#{userLongitude})+(latitude-#{userLatitude})*(latitude-#{userLatitude})) &lt; #{distance}
   </select>
 
+  <select id="selectParkingSlotByHardwareId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    SELECT * FROM parking_slot WHERE hardware_id = #{hardwareId}
+  </select>
 </mapper>

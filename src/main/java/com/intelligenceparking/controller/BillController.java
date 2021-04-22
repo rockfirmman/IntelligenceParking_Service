@@ -1,16 +1,18 @@
 package com.intelligenceparking.controller;
 
 
-import com.intelligenceparking.bean.BillModel;
+
 import com.intelligenceparking.bean.CarModel;
-import com.intelligenceparking.controller.viewobject.BillVO;
+import com.intelligenceparking.bean.ParkingSlotModel;
 import com.intelligenceparking.dataobject.BillDO;
 import com.intelligenceparking.response.CommonReturnType;
 import com.intelligenceparking.service.BillService;
 import com.intelligenceparking.service.CarService;
+import com.intelligenceparking.service.ParkingSlotService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -19,7 +21,10 @@ import java.util.List;
 public class BillController {
     @Autowired
     private BillService billService;
+    @Autowired
     private CarService carService;
+    @Autowired
+    private ParkingSlotService parkingSlotService;
 
     @PostMapping(value="/selectBillById")
     public CommonReturnType selectBillById(
@@ -132,18 +137,32 @@ public class BillController {
         return CommonReturnType.create(billDOList);
     }
 
-    public void createBillByHardware(
+    public void createBillByHardwareId(
             @RequestParam(name = "hardwareId") int hardwareId,
             @RequestParam(name = "license") String license){
-        CarModel carModel = carService.selectCarById(hardwareId);
+        ParkingSlotModel parkingSlotModel = parkingSlotService.selectParkingSlotByHardwareId(hardwareId);
+        CarModel carModel = carService.selectCarByLicense(license);
+        Date day=new Date();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         BillDO billDO = new BillDO();
-//        billDO.setCarId(carId);
-//        billDO.setSlotId(slotId);
-//        billDO.setFieldId(fieldId);
-//        billDO.setPayerId(payerId);
-//        billDO.setOwnerId(ownerId);
-//        billDO.setStartTime(startTime);
-//        billService.createBill(billDO);
+        billDO.setCarId(carModel.getId());
+        billDO.setPayerId(carModel.getUserId());
+        billDO.setSlotId(parkingSlotModel.getId());
+        billDO.setFieldId(parkingSlotModel.getFieldId());
+        billDO.setOwnerId(parkingSlotModel.getOwnerId());
+        billDO.setStartTime(day);
+        billDO.setState(1);
+        billService.createBill(billDO);
     }
 
+    public void endBillByHardwareId(@RequestParam(name = "hardwareId") int hardwareId){
+        ParkingSlotModel parkingSlotModel = parkingSlotService.selectParkingSlotByHardwareId(hardwareId);
+        //TODO selectBillBySlotId
+        Date day=new Date();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        BillDO billDO = new BillDO();
+
+        billDO.setStartTime(day);
+        billService.createBill(billDO);
+    }
 }

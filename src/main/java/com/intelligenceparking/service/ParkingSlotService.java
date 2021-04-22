@@ -40,4 +40,9 @@ public interface ParkingSlotService {
      * 返回附近停车位
      */
     List<ParkingSlotModel> slotNearBy(ParkingNearBy parkingNearBy);
+
+    /**
+     * 根据硬件id查找停车位
+     */
+    ParkingSlotModel selectParkingSlotByHardwareId(int hardwareId);
 }

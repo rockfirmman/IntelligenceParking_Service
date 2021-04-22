@@ -1,7 +1,14 @@
 package com.intelligenceparking.controller;
 
+import com.intelligenceparking.bean.CarModel;
+import com.intelligenceparking.bean.ParkingSlotModel;
+import com.intelligenceparking.dataobject.BillDO;
 import com.intelligenceparking.response.CommonReturnType;
+import com.intelligenceparking.service.BillService;
+import com.intelligenceparking.service.CarService;
+import com.intelligenceparking.service.ParkingSlotService;
 import com.intelligenceparking.tool.pythonRecognize.recognize;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -15,6 +22,7 @@ import java.util.Date;
 @RestController
 @RequestMapping("/file")
 public class FileController {
+    @Autowired
     private BillController billController;
     private final String filePath = "C:/Users/rockfirmman/Desktop/";
 //    private final String filePath = "/root/";
@@ -105,7 +113,9 @@ public class FileController {
     }
 
     @PostMapping("/uploadLicensePic")
-    public CommonReturnType uploadLicensePic(@RequestParam(name = "fileName") MultipartFile fileUpload, @RequestParam(name = "hardwareId") int hardwareId){
+    public CommonReturnType uploadLicensePic(
+            @RequestParam(name = "fileName") MultipartFile fileUpload,
+            @RequestParam(name = "hardwareId") int hardwareId){
         //获取文件名
         String fileName = fileUpload.getOriginalFilename();
         System.out.println(fileName);
@@ -124,13 +134,19 @@ public class FileController {
         File deleteFile = new File(filePath + "License/" + fileName);
         deleteFile.delete();
         if("null".equals(license)) return CommonReturnType.create("未检测到车辆","false");
-        //TODO ,按照hardware id 寻找停车位，并入业务
-        //
-        billController.createBillByHardware(hardwareId,license);
+        //创建订单
+        billController.createBillByHardwareId(hardwareId,license);
         return CommonReturnType.create(license,"success");
     }
 
+    @PostMapping("/uploadCarLeavePic")
+    public CommonReturnType uploadCarLeavePic(
+            @RequestParam(name = "fileName") MultipartFile fileUpload,
+            @RequestParam(name = "hardwareId") int hardwareId){
+        //结束对应订单，计算价格
 
+        return CommonReturnType.create(hardwareId,"success");
+    }
 
     public ResponseEntity<FileSystemResource> export(File file) {
         if (file == null) {

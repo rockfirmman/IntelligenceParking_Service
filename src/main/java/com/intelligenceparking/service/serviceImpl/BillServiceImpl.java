@@ -21,26 +21,25 @@ public class BillServiceImpl implements BillService {
 
     @Override
     public BillDO selectBillById(int id) {
-        BillDO billDO = billDOMapper.selectBillById(id);
+        BillDO billDO = billDOMapper.selectByPrimaryKey(id);
         return billDO;
     }
 
     @Override
     public void createBill(BillDO billDO) {
 //        BillDO billDO = convertFromModel(billModel);
-        billDOMapper.createBill(billDO);
+        billDOMapper.insert(billDO);
     }
 
     @Override
     public void updateBillState(BillDO billDO) {
 //        BillDO billDO = convertFromModel(billModel);
-        billDOMapper.updateBillState(billDO);
+        billDOMapper.updateByPrimaryKeySelective(billDO);
     }
 
     @Override
     public void addComments(BillDO billDO) {
-//        BillDO billDO = convertFromModel(billModel);
-        billDOMapper.addComments(billDO);
+        billDOMapper.updateByPrimaryKeySelective(billDO);
     }
 
     @Override

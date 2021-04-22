@@ -26,27 +26,6 @@ public interface BillDOMapper {
     int updateByPrimaryKey(BillDO record);
 
     /**
-     * 通过id查询账单
-     */
-    BillDO selectBillById(@Param("id") int id);
-
-    /**
-     * 生成账单
-     */
-    void createBill(BillDO billDO);
-
-
-    /**
-     * 更新账单状态
-     */
-    void updateBillState(BillDO billDO);
-
-    /**
-     * 添加打分评论
-     */
-    void addComments(BillDO billDO);
-
-    /**
      * 通过车主id查询账单
      */
     List<BillDO> selectBillByPayerId(@Param("payerId") int payerId);

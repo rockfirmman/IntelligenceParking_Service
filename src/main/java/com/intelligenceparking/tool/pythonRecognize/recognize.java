@@ -10,8 +10,8 @@ public  class recognize {
         try {
             String[] commands = new String[] { "python", commandPath, picPath};
             Process proc = Runtime.getRuntime().exec(commands);// 执行py文件
-//            BufferedReader in = new BufferedReader(new InputStreamReader(proc.getInputStream(),"gb2312")); //gb2312防止调用乱码
-            BufferedReader in = new BufferedReader(new InputStreamReader(proc.getInputStream()));
+            BufferedReader in = new BufferedReader(new InputStreamReader(proc.getInputStream(),"gb2312")); //gb2312防止调用乱码
+//            BufferedReader in = new BufferedReader(new InputStreamReader(proc.getInputStream()));
             String line = null;
             while ((line = in.readLine()) != null) {
                 license = line;
@@ -24,11 +24,5 @@ public  class recognize {
             e.printStackTrace();
         }
         return license;
-    }
-
-    public static void main(String[] args) {
-        String commandPath = "C:\\Users\\rockfirmman\\Desktop\\毕业设计\\IntelligenceParking\\src\\main\\java\\com\\intelligenceparking\\tool\\pythonRecognize\\recognize.py";
-        String picPath = "C:\\Users\\rockfirmman\\Desktop\\test.jfif";
-        System.out.println(recognize.getLicense(commandPath,picPath));
     }
 }

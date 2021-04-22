@@ -11,6 +11,6 @@ public class test {
         Date day=new Date();
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         df.format(day);
-        t.createBillByHardware(1,"xxxx");
+        System.out.println(df.format(day));
     }
 }

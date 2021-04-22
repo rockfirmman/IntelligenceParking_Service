@@ -141,11 +141,7 @@
     SELECT * FROM car WHERE user_id = #{userId}
   </select>
 
-  <update id="updateCarMsg" parameterType="com.intelligenceparking.dataobject.CarDO">
-
-  </update>
-
-  <select id="selectCarByLicense" parameterType="java.lang.String" resultMap="BaseResultMap">
-    SELECT * FROM car WHERE license = #{license,jdbcType=VARCHAR}
+  <select id="selectCarByLicense" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    SELECT * FROM car WHERE user_id = #{userId}
   </select>
 </mapper>

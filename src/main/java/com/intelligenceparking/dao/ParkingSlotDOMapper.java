@@ -35,4 +35,9 @@ public interface ParkingSlotDOMapper {
      * 返回附近停车位
      */
     List<ParkingSlotDO> slotNearBy(ParkingNearBy parkingNearBy);
+
+    /**
+     * 根据硬件id查找停车位
+     */
+    ParkingSlotDO selectParkingSlotByHardwareId(@Param("hardwareId") int hardwareId);
 }
