@@ -10,45 +10,39 @@ public interface BillService {
     /**
      * 通过id查询账单
      */
-    BillDO selectBillById(int id);
+    BillModel selectBillById(int id);
 
     /**
      * 生成账单
      */
-    void createBill(BillDO billDO);
+    void createBill(BillModel billModel);
 
     /**
      * 修改账单状态
      */
-    void updateBillState(BillDO billDO);
-
-
-    /**
-     * 添加打分评论
-     */
-    void addComments(BillDO billDO);
+    void updateBillState(BillModel billModel);
 
     /**
      * 通过车主id查询账单
      */
-    List<BillDO> selectBillByPayerId(@Param("payerId") int payerId);
+    List<BillModel> selectBillByPayerId(@Param("payerId") int payerId);
 
     /**
      * 通过停车场id查询账单
      */
-    List<BillDO> selectBillByFieldId(@Param("fieldId") int fieldId);
+    List<BillModel> selectBillByFieldId(@Param("fieldId") int fieldId);
     /**
      * 通过停车位id查询账单
      */
-    List<BillDO> selectBillBySlotId(@Param("slotId") int slotId);
+    List<BillModel> selectBillBySlotId(@Param("slotId") int slotId);
 
     /**
      * 通过停车位拥有者id查询账单
      */
-    List<BillDO> selectBillByOwnerId(@Param("ownerId") int ownerId);
+    List<BillModel> selectBillByOwnerId(@Param("ownerId") int ownerId);
 
     /**
      * 通过车辆id查询账单
      */
-    List<BillDO> selectBillByCarId(@Param("carId") int carId);
+    List<BillModel> selectBillByCarId(@Param("carId") int carId);
 }

@@ -33,19 +33,19 @@ public interface BillDOMapper {
     /**
      * 通过停车场id查询账单
      */
-    BillDO selectBillByFieldId(@Param("fieldId") int fieldId);
+    List<BillDO> selectBillByFieldId(@Param("fieldId") int fieldId);
     /**
      * 通过停车位id查询账单
      */
-    BillDO selectBillBySlotId(@Param("slotId") int slotId);
+    List<BillDO> selectBillBySlotId(@Param("slotId") int slotId);
 
     /**
      * 通过停车位拥有者id查询账单
      */
-    BillDO selectBillByOwnerId(@Param("ownerId") int ownerId);
+    List<BillDO> selectBillByOwnerId(@Param("ownerId") int ownerId);
 
     /**
      * 通过车辆id查询账单
      */
-    BillDO selectBillByCarId(@Param("carId") int carId);
+    List<BillDO> selectBillByCarId(@Param("carId") int carId);
 }

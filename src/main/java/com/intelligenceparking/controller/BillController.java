@@ -2,6 +2,7 @@ package com.intelligenceparking.controller;
 
 
 
+import com.intelligenceparking.bean.BillModel;
 import com.intelligenceparking.bean.CarModel;
 import com.intelligenceparking.bean.ParkingSlotModel;
 import com.intelligenceparking.dataobject.BillDO;
@@ -29,8 +30,8 @@ public class BillController {
     @PostMapping(value="/selectBillById")
     public CommonReturnType selectBillById(
             @RequestParam(name = "id") int id){
-        BillDO billDO = billService.selectBillById(id);
-        return CommonReturnType.create(billDO);
+        BillModel billModel = billService.selectBillById(id);
+        return CommonReturnType.create(billModel);
     }
 
     @PostMapping(value="/createBill")
@@ -41,14 +42,16 @@ public class BillController {
             @RequestParam(name = "payerId") int payerId,
             @RequestParam(name = "ownerId") int ownerId,
             @RequestParam(name = "startTime") Date startTime){
-        BillDO billDO = new BillDO();
-        billDO.setCarId(carId);
-        billDO.setSlotId(slotId);
-        billDO.setFieldId(fieldId);
-        billDO.setPayerId(payerId);
-        billDO.setOwnerId(ownerId);
-        billDO.setStartTime(startTime);
-        billService.createBill(billDO);
+        BillModel billModel = new BillModel();
+        billModel.setCarId(carId);
+        billModel.setSlotId(slotId);
+        billModel.setFieldId(fieldId);
+        billModel.setPayerId(payerId);
+        billModel.setOwnerId(ownerId);
+        billModel.setStartTime(startTime);
+        billModel.setCost(0);
+        billModel.setScore(0);
+        billService.createBill(billModel);
         return CommonReturnType.create(null);
     }
 
@@ -56,11 +59,11 @@ public class BillController {
     public CommonReturnType startBill(
             @RequestParam(name = "id") int id,
             @RequestParam(name = "startTime") Date startTime){
-        BillDO billDO = new BillDO();
-        billDO.setId(id);
-        billDO.setState(3);
-        billDO.setStartTime(startTime);
-        billService.updateBillState(billDO);
+        BillModel billModel = billService.selectBillById(id);
+        billModel.setId(id);
+        billModel.setState(3);
+        billModel.setStartTime(startTime);
+        billService.updateBillState(billModel);
         return null;
     }
 
@@ -68,30 +71,12 @@ public class BillController {
     public CommonReturnType endBill(
             @RequestParam(name = "id") int id,
             @RequestParam(name = "endTime") Date endTime){
-        BillDO billDO = new BillDO();
-        billDO.setId(id);
-        billDO.setState(4);
-        billDO.setEndTime(endTime);
-        billService.updateBillState(billDO);
+        BillModel billModel = billService.selectBillById(id);
+        billModel.setId(id);
+        billModel.setState(4);
+        billModel.setEndTime(endTime);
+        billService.updateBillState(billModel);
         return null;
-    }
-
-    @PostMapping(value="/updateBillState")
-    public CommonReturnType updateBillState(
-            @RequestParam(name = "id") int id,
-            @RequestParam(name = "state") int state,
-            @RequestParam(name = "cost") float cost,
-            @RequestParam(name = "startTime") Date startTime,
-            @RequestParam(name = "endTime") Date endTime){
-        //TODO, count cost
-        BillDO billDO = new BillDO();
-        billDO.setId(id);
-        billDO.setState(state);
-        billDO.setCost(cost);
-        billDO.setStartTime(startTime);
-        billDO.setEndTime(endTime);
-        billService.updateBillState(billDO);
-        return CommonReturnType.create(null);
     }
 
     @PostMapping(value="/addComments")
@@ -99,42 +84,42 @@ public class BillController {
             @RequestParam(name = "id") int id,
             @RequestParam(name = "score") int score,
             @RequestParam(name = "comments") String comments){
-        BillDO billDO = new BillDO();
-        billDO.setId(id);
-        billDO.setScore(score);
-        billDO.setComments(comments);
-        billService.addComments(billDO);
+        BillModel billModel = new BillModel();
+        billModel.setId(id);
+        billModel.setScore(score);
+        billModel.setComments(comments);
+        billService.updateBillState(billModel);
         return CommonReturnType.create(null);
     }
 
     @PostMapping(value="/selectBillByPayerId")
     public CommonReturnType selectBillByPayerId(@RequestParam(name = "payerId") int payerId){
-        List<BillDO> billDOList = billService.selectBillByPayerId(payerId);
-        return CommonReturnType.create(billDOList);
+        List<BillModel> billModelList = billService.selectBillByPayerId(payerId);
+        return CommonReturnType.create(billModelList);
     }
 
     @PostMapping(value="/selectBillByFieldId")
     public CommonReturnType selectBillByFieldId(@RequestParam(name = "fieldId") int fieldId){
-        List<BillDO> billDOList = billService.selectBillByFieldId(fieldId);
-        return CommonReturnType.create(billDOList);
+        List<BillModel> billModelList = billService.selectBillByFieldId(fieldId);
+        return CommonReturnType.create(billModelList);
     }
 
     @PostMapping(value="/selectBillBySlotId")
     public CommonReturnType selectBillBySlotId(@RequestParam(name = "slotId") int slotId){
-        List<BillDO> billDOList = billService.selectBillBySlotId(slotId);
-        return CommonReturnType.create(billDOList);
+        List<BillModel> billModelList = billService.selectBillBySlotId(slotId);
+        return CommonReturnType.create(billModelList);
     }
 
     @PostMapping(value="/selectBillByOwnerId")
     public CommonReturnType selectBillByOwnerId(@RequestParam(name = "ownerId") int ownerId){
-        List<BillDO> billDOList = billService.selectBillByOwnerId(ownerId);
-        return CommonReturnType.create(billDOList);
+        List<BillModel> billModelList = billService.selectBillByOwnerId(ownerId);
+        return CommonReturnType.create(billModelList);
     }
 
     @PostMapping(value="/selectBillByCarId")
     public CommonReturnType selectBillByCarId(@RequestParam(name = "carId") int carId){
-        List<BillDO> billDOList = billService.selectBillByCarId(carId);
-        return CommonReturnType.create(billDOList);
+        List<BillModel> billModelList = billService.selectBillByCarId(carId);
+        return CommonReturnType.create(billModelList);
     }
 
     public void createBillByHardwareId(
@@ -144,25 +129,39 @@ public class BillController {
         CarModel carModel = carService.selectCarByLicense(license);
         Date day=new Date();
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        BillDO billDO = new BillDO();
-        billDO.setCarId(carModel.getId());
-        billDO.setPayerId(carModel.getUserId());
-        billDO.setSlotId(parkingSlotModel.getId());
-        billDO.setFieldId(parkingSlotModel.getFieldId());
-        billDO.setOwnerId(parkingSlotModel.getOwnerId());
-        billDO.setStartTime(day);
-        billDO.setState(1);
-        billService.createBill(billDO);
+        BillModel billModel = new BillModel();
+        billModel.setCarId(carModel.getId());
+        billModel.setPayerId(carModel.getUserId());
+        billModel.setSlotId(parkingSlotModel.getId());
+        billModel.setFieldId(parkingSlotModel.getFieldId());
+        billModel.setOwnerId(parkingSlotModel.getOwnerId());
+        billModel.setStartTime(day);
+        billModel.setState(1);
+        billModel.setScore(0);
+        billModel.setCost(0);
+        billService.createBill(billModel);
     }
 
     public void endBillByHardwareId(@RequestParam(name = "hardwareId") int hardwareId){
         ParkingSlotModel parkingSlotModel = parkingSlotService.selectParkingSlotByHardwareId(hardwareId);
-        //TODO selectBillBySlotId
+        List<BillModel> billModelList = billService.selectBillBySlotId(parkingSlotModel.getId());
+        BillModel billModel = new BillModel();
+        for(BillModel bill:billModelList){
+            if (bill.getState()==1){
+                billModel = bill;
+                break;
+            }
+        }
         Date day=new Date();
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        BillDO billDO = new BillDO();
-
-        billDO.setStartTime(day);
-        billService.createBill(billDO);
+        billModel.setState(2);
+        billModel.setEndTime(day);
+        long stateTimeLong = billModel.getStartTime().getTime();
+        long endTimeLong = billModel.getEndTime().getTime();
+        float cost = (endTimeLong-stateTimeLong+60*1000*60-1)/(1000*60*60);
+        cost *= parkingSlotModel.getPrice();
+        billModel.setCost(cost);
+        System.out.println(cost);
+        billService.updateBillState(billModel);
     }
 }

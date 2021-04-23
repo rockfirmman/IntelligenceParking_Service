@@ -20,52 +20,51 @@ public class BillServiceImpl implements BillService {
     private BillDOMapper billDOMapper;
 
     @Override
-    public BillDO selectBillById(int id) {
+    public BillModel selectBillById(int id) {
         BillDO billDO = billDOMapper.selectByPrimaryKey(id);
-        return billDO;
+        return convertFromDO(billDO);
     }
 
     @Override
-    public void createBill(BillDO billDO) {
-//        BillDO billDO = convertFromModel(billModel);
+    public void createBill(BillModel billModel) {
+        BillDO billDO = convertFromModel(billModel);
         billDOMapper.insert(billDO);
     }
 
     @Override
-    public void updateBillState(BillDO billDO) {
-//        BillDO billDO = convertFromModel(billModel);
+    public void updateBillState(BillModel billModel) {
+        BillDO billDO = convertFromModel(billModel);
         billDOMapper.updateByPrimaryKeySelective(billDO);
     }
 
     @Override
-    public void addComments(BillDO billDO) {
-        billDOMapper.updateByPrimaryKeySelective(billDO);
-    }
-
-    @Override
-    public List<BillDO> selectBillByPayerId(int payerId) {
+    public List<BillModel> selectBillByPayerId(int payerId) {
         List<BillDO> billDOList = billDOMapper.selectBillByPayerId(payerId);
-        return billDOList;
+        return convertFromDOList(billDOList);
     }
 
     @Override
-    public List<BillDO> selectBillByFieldId(int fieldId) {
-        return null;
+    public List<BillModel> selectBillByFieldId(int fieldId) {
+        List<BillDO> billDOList = billDOMapper.selectBillByFieldId(fieldId);
+        return convertFromDOList(billDOList);
     }
 
     @Override
-    public List<BillDO> selectBillBySlotId(int slotId) {
-        return null;
+    public List<BillModel> selectBillBySlotId(int slotId) {
+        List<BillDO> billDOList = billDOMapper.selectBillBySlotId(slotId);
+        return convertFromDOList(billDOList);
     }
 
     @Override
-    public List<BillDO> selectBillByOwnerId(int ownerId) {
-        return null;
+    public List<BillModel> selectBillByOwnerId(int ownerId) {
+        List<BillDO> billDOList = billDOMapper.selectBillByOwnerId(ownerId);
+        return convertFromDOList(billDOList);
     }
 
     @Override
-    public List<BillDO> selectBillByCarId(int carId) {
-        return null;
+    public List<BillModel> selectBillByCarId(int carId) {
+        List<BillDO> billDOList = billDOMapper.selectBillByCarId(carId);
+        return convertFromDOList(billDOList);
     }
 
     private BillDO convertFromModel(BillModel billModel) {

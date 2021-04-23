@@ -144,7 +144,7 @@ public class FileController {
             @RequestParam(name = "fileName") MultipartFile fileUpload,
             @RequestParam(name = "hardwareId") int hardwareId){
         //结束对应订单，计算价格
-
+        billController.endBillByHardwareId(hardwareId);
         return CommonReturnType.create(hardwareId,"success");
     }
 
