@@ -5,7 +5,6 @@ package com.intelligenceparking.controller;
 import com.intelligenceparking.bean.BillModel;
 import com.intelligenceparking.bean.CarModel;
 import com.intelligenceparking.bean.ParkingSlotModel;
-import com.intelligenceparking.dataobject.BillDO;
 import com.intelligenceparking.response.CommonReturnType;
 import com.intelligenceparking.service.BillService;
 import com.intelligenceparking.service.CarService;

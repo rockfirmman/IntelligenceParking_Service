@@ -1,6 +1,5 @@
 package com.intelligenceparking.controller;
 
-import com.intelligenceparking.bean.ParkingFieldModel;
 import com.intelligenceparking.bean.ParkingSlotModel;
 import com.intelligenceparking.response.CommonReturnType;
 import com.intelligenceparking.service.ParkingSlotService;

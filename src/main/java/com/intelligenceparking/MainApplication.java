@@ -1,6 +1,6 @@
 package com.intelligenceparking;
 
-import ch.qos.logback.classic.gaffer.PropertyUtil;
+import com.intelligenceparking.tool.SocketServer;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -21,6 +21,8 @@ public class MainApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(MainApplication.class, args);
+        SocketServer server = new SocketServer();
+        server.startSocketServer(8088);
     }
     @Bean
     public MultipartConfigElement multipartConfigElement() {

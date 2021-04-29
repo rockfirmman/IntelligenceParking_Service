@@ -6,8 +6,9 @@ package com.intelligenceparking.response;
 public class CommonReturnType {
   //表明对应请求的返回处理结果，有success或fail
   private String status;
-  //若status是succes，则data内返回前端所需要的数据
-  //若status是fail。则data内使用通用的错误格式
+  //若fail，包含错误信息；若success，为null
+  private String message;
+  //若fail，为null；若success,包含对应的viewObject或model
   private Object data;
 
   /**
@@ -18,56 +19,58 @@ public class CommonReturnType {
    * @return the common return type
    */
   public static CommonReturnType create(Object result){
-    return CommonReturnType.create(result,"success");
+    return CommonReturnType.create("success","",result);
   }
 
   /**
    * Create common return type.
    *
-   * @param result the result
-   * @param status the status
+   * @param message the result
+   * @param status the status, "success" or "fail"
    *
    * @return the common return type
    */
-  public static CommonReturnType create(Object result, String status){
-    CommonReturnType type = new CommonReturnType();
-    type.setStatus(status);
-    type.setData(result);
-    return type;
+  public static CommonReturnType create(String status,String message){
+    return CommonReturnType.create(status,message,null);
   }
 
   /**
-   * Gets status.
+   * Create common return type.
    *
-   * @return the status
+   * @param message the message
+   * @param result the result
+   * @param status the status, "success" or "fail"
+   *
+   * @return the common return type
    */
+  public static CommonReturnType create(String status,String message,Object result){
+    CommonReturnType commonReturnType = new CommonReturnType();
+    commonReturnType.setStatus(status);
+    commonReturnType.setMessage(message);
+    commonReturnType.setData(result);
+    return commonReturnType;
+  }
+
   public String getStatus() {
     return status;
   }
 
-  /**
-   * Sets status.
-   *
-   * @param status the status
-   */
   public void setStatus(String status) {
     this.status = status;
   }
 
-  /**
-   * Gets data.
-   *
-   * @return the data
-   */
+  public String getMessage() {
+    return message;
+  }
+
+  public void setMessage(String message) {
+    this.message = message;
+  }
+
   public Object getData() {
     return data;
   }
 
-  /**
-   * Sets data.
-   *
-   * @param data the data
-   */
   public void setData(Object data) {
     this.data = data;
   }

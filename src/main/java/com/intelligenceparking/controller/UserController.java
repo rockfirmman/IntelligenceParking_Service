@@ -64,15 +64,15 @@ public class UserController {
         userModel.setPassword(password);
         UserModel result = userService.login(userModel);
         if(result==null)
-            return CommonReturnType.create("账号名或密码名错误","fail");
+            return CommonReturnType.create("fail","账号名或密码名错误",null);
         if(result.isFrozen())
-            return CommonReturnType.create("尚未激活账号","fail"); //have not verified your account yet.
+            return CommonReturnType.create("fail","尚未激活账号",null); //have not verified your account yet.
         if(!DynamicUserTable.checkOnline(result.getId(),ipAddress)){
             DynamicUserTable.insert(result.getId(),ipAddress);
             UserVO userVO = convertFromDataObject(result);
             return CommonReturnType.create(userVO);
         }
-        return CommonReturnType.create("账号名或密码名错误","fail");
+        return CommonReturnType.create("fail","账号名或密码名错误",null);
     }
 
     @PostMapping("/registerVerify")
@@ -81,9 +81,9 @@ public class UserController {
         UserRegisterVerifyMsg userRegisterVerifyMsg = new UserRegisterVerifyMsg(email,code);
         if(DynamicRegisterTable.verify(userRegisterVerifyMsg.getEmail(), userRegisterVerifyMsg.getCode())) {
             userService.registerVerify(userRegisterVerifyMsg);
-            return CommonReturnType.create("注册码或邮箱错误","success");
+            return CommonReturnType.create("success","注册码或邮箱错误",null);
         }
-        return CommonReturnType.create("注册码或邮箱错误","fail");
+        return CommonReturnType.create("fail","注册码或邮箱错误",null);
     }
 
     @PostMapping("/updateMsg")

@@ -1,12 +1,6 @@
 package com.intelligenceparking.controller;
 
-import com.intelligenceparking.bean.CarModel;
-import com.intelligenceparking.bean.ParkingSlotModel;
-import com.intelligenceparking.dataobject.BillDO;
 import com.intelligenceparking.response.CommonReturnType;
-import com.intelligenceparking.service.BillService;
-import com.intelligenceparking.service.CarService;
-import com.intelligenceparking.service.ParkingSlotService;
 import com.intelligenceparking.tool.pythonRecognize.recognize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
@@ -65,13 +59,13 @@ public class FileController {
         File file = new File(filePath+"Coordinate/"+id);
         if (!file.exists()) {
             file.mkdirs();
-            return CommonReturnType.create("删除失败，文件不存在","fail");
+            return CommonReturnType.create("fail","删除失败，文件不存在",null);
         }
 
         File deleteFile = new File(filePath+"Coordinate/"+id+"/"+fileName);
         if (!file.exists()) {
             System.out.println("删除文件失败:" + fileName + "不存在！");
-            return CommonReturnType.create("删除失败，文件不存在","fail");
+            return CommonReturnType.create("fail","删除失败，文件不存在",null);
         }
 
         deleteFile.delete();
@@ -83,7 +77,7 @@ public class FileController {
     public Object downloadAvatar(@RequestParam(name = "id") int id){
         File file = new File(filePath+"Avatar/"+id+".jpg");
         if (!file.exists())
-            return CommonReturnType.create("下载失败，图片不存在","false");
+            return CommonReturnType.create("false","下载失败，图片不存在",null);
         return export(file);
     }
 
@@ -91,7 +85,7 @@ public class FileController {
     public Object downloadCoordinateOrPic(@RequestParam(name = "id") int id,@RequestParam(name = "fileName") String fileName){
         File file = new File(filePath+"Coordinate/"+id+"/"+fileName);
         if (!file.exists())
-            return CommonReturnType.create("下载失败，文件不存在","false");
+            return CommonReturnType.create("false","下载失败，文件不存在",null);
         return export(file);
     }
 
@@ -99,7 +93,7 @@ public class FileController {
     public CommonReturnType getCoordinateList(@RequestParam(name = "id") int id){
         File file = new File(filePath+"Coordinate/"+id);
         if (!file.exists())
-            return CommonReturnType.create("下载失败，文件不存在","false");
+            return CommonReturnType.create("false","下载失败，文件不存在",null);
         File[] fileList = file.listFiles();
         return CommonReturnType.create(fileList);
     }
@@ -108,7 +102,7 @@ public class FileController {
     public Object test(){
         File file = new File(filePath+"30.jpg");
         if (!file.exists())
-            return CommonReturnType.create("下载失败，图片不存在","false");
+            return CommonReturnType.create("false","下载失败，图片不存在",null);
         return export(file);
     }
 
@@ -133,10 +127,10 @@ public class FileController {
         //删除图片
         File deleteFile = new File(filePath + "License/" + fileName);
         deleteFile.delete();
-        if("null".equals(license)) return CommonReturnType.create("未检测到车辆","false");
+        if("null".equals(license)) return CommonReturnType.create("false","未检测到车辆",null);
         //创建订单
         billController.createBillByHardwareId(hardwareId,license);
-        return CommonReturnType.create(license,"success");
+        return CommonReturnType.create(license);
     }
 
     @PostMapping("/uploadCarLeavePic")
@@ -145,7 +139,7 @@ public class FileController {
             @RequestParam(name = "hardwareId") int hardwareId){
         //结束对应订单，计算价格
         billController.endBillByHardwareId(hardwareId);
-        return CommonReturnType.create(hardwareId,"success");
+        return CommonReturnType.create(hardwareId);
     }
 
     public ResponseEntity<FileSystemResource> export(File file) {
