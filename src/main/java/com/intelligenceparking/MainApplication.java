@@ -1,12 +1,15 @@
 package com.intelligenceparking;
 
-import com.intelligenceparking.tool.SocketServer;
+import com.intelligenceparking.tool.PicUtil;
+import com.intelligenceparking.tool.SpringUtil;
+import com.intelligenceparking.tool.socket.MainServer;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.util.unit.DataSize;
 
 import javax.servlet.MultipartConfigElement;
@@ -21,8 +24,10 @@ public class MainApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(MainApplication.class, args);
-        SocketServer server = new SocketServer();
+        MainServer server = new MainServer();
         server.startSocketServer(8088);
+        PicUtil picUtil = new PicUtil();
+        picUtil.test();
     }
     @Bean
     public MultipartConfigElement multipartConfigElement() {

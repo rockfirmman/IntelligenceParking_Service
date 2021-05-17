@@ -17,4 +17,6 @@ public interface UserService {
     void registerVerify(UserRegisterVerifyMsg userRegisterVerifyMsg);
 
     void updateMsg(UserModel userModel);
+
+    UserModel selectUserById(int id);
 }

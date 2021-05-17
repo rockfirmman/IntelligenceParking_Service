@@ -41,6 +41,12 @@ public class UserServiceImpl implements UserService {
         userDOMapper.updateMsg(userDO);
     }
 
+    @Override
+    public UserModel selectUserById(int id) {
+        UserDO userDO = userDOMapper.selectByPrimaryKey(id);
+        return convertFromDO(userDO);
+    }
+
     private UserDO convertFromModel(UserModel userModel) {
         if (userModel == null) {
             return null;

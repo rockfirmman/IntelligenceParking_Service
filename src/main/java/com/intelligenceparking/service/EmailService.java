@@ -1,6 +1,7 @@
 package com.intelligenceparking.service;
 
 
+import com.intelligenceparking.bean.BillModel;
 import com.intelligenceparking.tool.dynamicTable.DynamicRegisterTable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
@@ -26,6 +27,22 @@ public class EmailService {
         DynamicRegisterTable.insert(emailAddress,code);
         subject = "Intelligence Parking Verification";
         content = "Your verification code is: \n"+code;
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom(SENDER);
+        message.setTo(emailAddress);
+        message.setSubject(subject);
+        message.setText(content);
+        try {
+            mailSender.send(message);
+        } catch (Exception e) {
+            System.out.println("发送简单邮件时发生异常! "+ e);
+        }
+    }
+
+    public void notify(String emailAddress, BillModel billModel) {
+        String subject,content;
+        subject = "Intelligence Parking Verification";
+        content = billModel.toString();
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom(SENDER);
         message.setTo(emailAddress);

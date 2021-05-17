@@ -67,12 +67,14 @@ public class UserController {
             return CommonReturnType.create("fail","账号名或密码名错误",null);
         if(result.isFrozen())
             return CommonReturnType.create("fail","尚未激活账号",null); //have not verified your account yet.
-        if(!DynamicUserTable.checkOnline(result.getId(),ipAddress)){
-            DynamicUserTable.insert(result.getId(),ipAddress);
-            UserVO userVO = convertFromDataObject(result);
-            return CommonReturnType.create(userVO);
-        }
-        return CommonReturnType.create("fail","账号名或密码名错误",null);
+//        if(!DynamicUserTable.checkOnline(result.getId(),ipAddress)){
+//            DynamicUserTable.insert(result.getId(),ipAddress);
+//            UserVO userVO = convertFromDataObject(result);
+//            return CommonReturnType.create(userVO);
+//        }
+//        return CommonReturnType.create("fail","账号名或密码名错误",null);
+        UserVO userVO = convertFromDataObject(result);
+        return CommonReturnType.create(userVO);
     }
 
     @PostMapping("/registerVerify")
@@ -81,7 +83,7 @@ public class UserController {
         UserRegisterVerifyMsg userRegisterVerifyMsg = new UserRegisterVerifyMsg(email,code);
         if(DynamicRegisterTable.verify(userRegisterVerifyMsg.getEmail(), userRegisterVerifyMsg.getCode())) {
             userService.registerVerify(userRegisterVerifyMsg);
-            return CommonReturnType.create("success","注册码或邮箱错误",null);
+            return CommonReturnType.create("success","成功",null);
         }
         return CommonReturnType.create("fail","注册码或邮箱错误",null);
     }
@@ -120,6 +122,13 @@ public class UserController {
     public CommonReturnType findallsuer(HttpServletRequest request) {
         return null;
     }
+
+//    @RequestMapping("/selectUserById")
+//    public CommonReturnType selectUserById(HttpServletRequest request,
+//                                           @RequestParam(name = "id") int id) {
+//        UserModel userModel = userService.selectUserById(id);
+//        return CommonReturnType.create(userModel);
+//    }
 
 
     private UserVO convertFromDataObject(UserModel userModel) {

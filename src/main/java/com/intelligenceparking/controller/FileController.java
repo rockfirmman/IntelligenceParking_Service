@@ -18,8 +18,8 @@ import java.util.Date;
 public class FileController {
     @Autowired
     private BillController billController;
-    private final String filePath = "C:/Users/rockfirmman/Desktop/";
-//    private final String filePath = "/root/";
+//    private final String filePath = "C:/Users/rockfirmman/Desktop/";
+    private final String filePath = "/root/";
     @PostMapping("/uploadAvatar")
     public Object uploadAvatar(@RequestParam(name = "fileName") MultipartFile fileUpload, @RequestParam(name = "id") int id){
         //获取文件名
@@ -140,6 +140,16 @@ public class FileController {
         //结束对应订单，计算价格
         billController.endBillByHardwareId(hardwareId);
         return CommonReturnType.create(hardwareId);
+    }
+
+    public void uploadLicensePic(String fileName,int hardwareId){
+        //获取车牌号
+        String commandPath = filePath + "recognize.py";
+        String picPath = filePath + "License/" + fileName;
+        String license = recognize.getLicense(commandPath,picPath);
+        System.out.println(hardwareId + ": " + license);
+        //创建订单
+        billController.createBillByHardwareId(hardwareId,license);
     }
 
     public ResponseEntity<FileSystemResource> export(File file) {

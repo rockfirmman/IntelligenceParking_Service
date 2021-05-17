@@ -5,7 +5,6 @@ public class UserVO {
     private String username;
     private String phone;
     private String email;
-    private boolean isFrozed;
     private String avatar;
     private String account;
 
@@ -39,14 +38,6 @@ public class UserVO {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public boolean isFrozed() {
-        return isFrozed;
-    }
-
-    public void setFrozed(boolean frozed) {
-        isFrozed = frozed;
     }
 
     public String getAvatar() {

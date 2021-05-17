@@ -5,10 +5,9 @@ package com.intelligenceparking.controller;
 import com.intelligenceparking.bean.BillModel;
 import com.intelligenceparking.bean.CarModel;
 import com.intelligenceparking.bean.ParkingSlotModel;
+import com.intelligenceparking.bean.UserModel;
 import com.intelligenceparking.response.CommonReturnType;
-import com.intelligenceparking.service.BillService;
-import com.intelligenceparking.service.CarService;
-import com.intelligenceparking.service.ParkingSlotService;
+import com.intelligenceparking.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,6 +24,10 @@ public class BillController {
     private CarService carService;
     @Autowired
     private ParkingSlotService parkingSlotService;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private EmailService emailService;
 
     @PostMapping(value="/selectBillById")
     public CommonReturnType selectBillById(
@@ -121,11 +124,10 @@ public class BillController {
         return CommonReturnType.create(billModelList);
     }
 
-    public void createBillByHardwareId(
-            @RequestParam(name = "hardwareId") int hardwareId,
-            @RequestParam(name = "license") String license){
+    public void createBillByHardwareId(int hardwareId,String license){
         ParkingSlotModel parkingSlotModel = parkingSlotService.selectParkingSlotByHardwareId(hardwareId);
         CarModel carModel = carService.selectCarByLicense(license);
+        UserModel userModel = userService.selectUserById(carModel.getUserId());
         Date day=new Date();
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         BillModel billModel = new BillModel();
@@ -138,6 +140,7 @@ public class BillController {
         billModel.setState(1);
         billModel.setScore(0);
         billModel.setCost(0);
+        emailService.notify(userModel.getEmail(),billModel); // 发送邮件通知
         billService.createBill(billModel);
     }
 
@@ -161,6 +164,8 @@ public class BillController {
         cost *= parkingSlotModel.getPrice();
         billModel.setCost(cost);
         System.out.println(cost);
+        UserModel userModel = userService.selectUserById(billModel.getPayerId());
+        emailService.notify(userModel.getEmail(),billModel); // 发送邮件通知
         billService.updateBillState(billModel);
     }
 }
