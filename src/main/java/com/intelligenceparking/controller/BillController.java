@@ -8,6 +8,7 @@ import com.intelligenceparking.bean.ParkingSlotModel;
 import com.intelligenceparking.bean.UserModel;
 import com.intelligenceparking.response.CommonReturnType;
 import com.intelligenceparking.service.*;
+import com.intelligenceparking.tool.dynamicTable.DynamicBillTable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -124,6 +125,13 @@ public class BillController {
         return CommonReturnType.create(billModelList);
     }
 
+    @PostMapping(value="/poll")
+    public CommonReturnType poll(@RequestParam(name = "payerId") int payerId){
+        if(!DynamicBillTable.check(payerId))
+            return CommonReturnType.create("fail","无新账单",null);
+        return CommonReturnType.create(DynamicBillTable.verifyBill(payerId));
+    }
+
     public void createBillByHardwareId(int hardwareId,String license){
         ParkingSlotModel parkingSlotModel = parkingSlotService.selectParkingSlotByHardwareId(hardwareId);
         CarModel carModel = carService.selectCarByLicense(license);
@@ -141,6 +149,7 @@ public class BillController {
         billModel.setScore(0);
         billModel.setCost(0);
         emailService.notify(userModel.getEmail(),billModel); // 发送邮件通知
+        DynamicBillTable.insert(billModel.getPayerId(),billModel);
         billService.createBill(billModel);
     }
 
@@ -167,5 +176,6 @@ public class BillController {
         UserModel userModel = userService.selectUserById(billModel.getPayerId());
         emailService.notify(userModel.getEmail(),billModel); // 发送邮件通知
         billService.updateBillState(billModel);
+        DynamicBillTable.insert(billModel.getPayerId(),billModel);
     }
 }

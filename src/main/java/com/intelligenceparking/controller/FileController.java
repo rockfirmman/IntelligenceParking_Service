@@ -134,12 +134,17 @@ public class FileController {
     }
 
     @PostMapping("/uploadCarLeavePic")
-    public CommonReturnType uploadCarLeavePic(
-            @RequestParam(name = "fileName") MultipartFile fileUpload,
-            @RequestParam(name = "hardwareId") int hardwareId){
+    public CommonReturnType uploadCarLeavePic(@RequestParam(name = "hardwareId") int hardwareId){
         //结束对应订单，计算价格
         billController.endBillByHardwareId(hardwareId);
         return CommonReturnType.create(hardwareId);
+    }
+
+    @RequestMapping(value="/uploadCarLeavePicGet", method = RequestMethod.POST)
+    public int getList(@RequestParam int hardwareId){
+        //结束对应订单，计算价格
+        billController.endBillByHardwareId(hardwareId);
+        return hardwareId;
     }
 
     public void uploadLicensePic(String fileName,int hardwareId){

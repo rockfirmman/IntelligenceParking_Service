@@ -26,10 +26,8 @@ import java.util.Date;
 
 
 public class PicUtil {
-    public void test(){
-        BillService billService = SpringUtil.getBean(BillServiceImpl.class);
-        BillModel billModel = billService.selectBillById(2);
-        System.out.println(billModel);
+    public static void test(){
+
     }
     public static String byte2image( final byte[] pic ) {
         Date date=new Date();
@@ -40,8 +38,11 @@ public class PicUtil {
 
         System.out.println("start making pic");
         BufferedImage img = map( 240, 320 ,pic);
-        savePNG(img, "/root/" + fileName );
+        savePNG(img, "/root/License/" + fileName );
         System.out.println("end making pic");
+
+        BillUtil.recognize(fileName);
+        System.out.println("start recognize pic");
         return fileName;
     }
 

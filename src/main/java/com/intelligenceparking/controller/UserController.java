@@ -130,7 +130,6 @@ public class UserController {
 //        return CommonReturnType.create(userModel);
 //    }
 
-
     private UserVO convertFromDataObject(UserModel userModel) {
         if (userModel == null) {
             return null;

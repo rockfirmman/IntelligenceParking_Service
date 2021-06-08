@@ -14,6 +14,7 @@ C:\Users\rockfirmman\Desktop\毕业设计\IntelligenceParking\src\main\java\com\
 C:\Users\rockfirmman\Desktop\毕业设计\IntelligenceParking\src\main\java\com\intelligenceparking\dataobject\CarDO.java
 C:\Users\rockfirmman\Desktop\毕业设计\IntelligenceParking\src\main\java\com\intelligenceparking\tool\dynamicTable\DynamicUserTable.java
 C:\Users\rockfirmman\Desktop\毕业设计\IntelligenceParking\src\main\java\com\intelligenceparking\dataobject\ParkingSlotDO.java
+C:\Users\rockfirmman\Desktop\毕业设计\IntelligenceParking\src\main\java\com\intelligenceparking\tool\BillUtil.java
 C:\Users\rockfirmman\Desktop\毕业设计\IntelligenceParking\src\main\java\com\intelligenceparking\tool\pythonRecognize\test.java
 C:\Users\rockfirmman\Desktop\毕业设计\IntelligenceParking\src\main\java\com\intelligenceparking\dao\UserDOMapper.java
 C:\Users\rockfirmman\Desktop\毕业设计\IntelligenceParking\src\main\java\com\intelligenceparking\dataobject\UserDO.java
@@ -65,6 +66,7 @@ C:\Users\rockfirmman\Desktop\毕业设计\IntelligenceParking\src\main\java\com\
 C:\Users\rockfirmman\Desktop\毕业设计\IntelligenceParking\src\main\java\com\intelligenceparking\service\ParkingSlotService.java
 C:\Users\rockfirmman\Desktop\毕业设计\IntelligenceParking\src\main\java\com\intelligenceparking\tool\pythonRecognize\recognize.java
 C:\Users\rockfirmman\Desktop\毕业设计\IntelligenceParking\src\main\java\com\intelligenceparking\controller\viewobject\BillVO.java
+C:\Users\rockfirmman\Desktop\毕业设计\IntelligenceParking\src\main\java\com\intelligenceparking\tool\dynamicTable\DynamicBillTable.java
 C:\Users\rockfirmman\Desktop\毕业设计\IntelligenceParking\src\main\java\com\intelligenceparking\tool\client\TcpClient.java
 C:\Users\rockfirmman\Desktop\毕业设计\IntelligenceParking\src\main\java\com\intelligenceparking\controller\FieldOwnerController.java
 C:\Users\rockfirmman\Desktop\毕业设计\IntelligenceParking\src\main\java\com\intelligenceparking\error\CommonError.java

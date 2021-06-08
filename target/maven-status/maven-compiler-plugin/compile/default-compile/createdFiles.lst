@@ -17,6 +17,7 @@ com\intelligenceparking\controller\BillController.class
 com\intelligenceparking\service\ParkingFieldService.class
 com\intelligenceparking\dataobject\ParkingSlotDO.class
 com\intelligenceparking\controller\viewobject\BillVO.class
+com\intelligenceparking\tool\dynamicTable\DynamicBillTable.class
 com\intelligenceparking\dataobject\UserDO.class
 com\intelligenceparking\service\SMSService.class
 com\intelligenceparking\controller\ParkingSlotController.class
@@ -32,6 +33,7 @@ com\intelligenceparking\tool\socket\TcpServer$1.class
 com\intelligenceparking\tool\requests\ParkingNearBy.class
 com\intelligenceparking\service\BillService.class
 com\intelligenceparking\bean\CarModel.class
+com\intelligenceparking\tool\BillUtil.class
 com\intelligenceparking\controller\viewobject\CarVO.class
 com\intelligenceparking\dataobject\ParkingFieldDO.class
 com\intelligenceparking\service\serviceImpl\FieldOwnerServiceImpl.class

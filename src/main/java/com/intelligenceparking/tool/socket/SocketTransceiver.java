@@ -135,16 +135,17 @@ public abstract  class SocketTransceiver implements Runnable{
                 totalCount += result;
                 System.out.println("totalCount: " + totalCount + "\n");
                 if(position>=640*240){
-                    for(byte bb:pic)
-                        System.out.print((bb&0xff)+" ");
-                    System.out.println("Start make picture: ");
+                    runFlag = false;
+//                    for(byte bb:pic)
+//                        System.out.print((bb&0xff)+" ");
+//                    System.out.println("Start make picture: ");
                     String fileName = PicUtil.byte2image(pic);
-                    fileController.uploadLicensePic(fileName,8);
                 }
             } catch (IOException e) {
                 runFlag = false;
             }
         }
+
         try {
             in.close();
             out.close();

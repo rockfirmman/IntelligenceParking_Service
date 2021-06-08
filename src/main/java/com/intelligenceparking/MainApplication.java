@@ -1,7 +1,9 @@
 package com.intelligenceparking;
 
+import com.intelligenceparking.tool.BillUtil;
 import com.intelligenceparking.tool.PicUtil;
 import com.intelligenceparking.tool.SpringUtil;
+import com.intelligenceparking.tool.dynamicTable.DynamicBillTable;
 import com.intelligenceparking.tool.socket.MainServer;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
@@ -26,8 +28,6 @@ public class MainApplication {
         SpringApplication.run(MainApplication.class, args);
         MainServer server = new MainServer();
         server.startSocketServer(8088);
-        PicUtil picUtil = new PicUtil();
-        picUtil.test();
     }
     @Bean
     public MultipartConfigElement multipartConfigElement() {
